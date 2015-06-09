@@ -1,0 +1,14 @@
+= form_for(@notification, html: { multipart: true }) do |f|
+  = render 'shared/error_messages', object: f.object
+  .form-group
+    = f.label(:person, "User ID")
+    = f.text_field :person, placeholder: "What user?", class: 'form-control'
+  .form-group
+    = f.label(:group, "Group ID")
+    = f.text_field :group, placeholder: "What group?", class: 'form-control'
+  .form-group
+    = f.label(:content, "Content")
+    = f.text_field :content, placeholder: "What what?", class: 'form-control'
+
+  .actions
+    = f.submit 'Broadcast', class: 'btn btn-primary'
