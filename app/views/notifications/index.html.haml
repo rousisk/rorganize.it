@@ -6,4 +6,6 @@
         - if @notifications.present?
           - @notifications.each do |note|
             %li
-              - note.content
+              = note.person.name
+              = note.group.name
+              = note.content
