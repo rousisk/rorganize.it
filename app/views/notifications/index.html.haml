@@ -3,9 +3,8 @@
   .row
     .col-md-8
       %ul.list-group
-        - if @notifications.present?
-          - @notifications.each do |note|
-            %li
-              = note.person.name
-              = note.group.name
-              = note.content
+        - @notifications.each do |note|
+          %li
+            = note.person.name
+            = note.group.name
+            = note.content

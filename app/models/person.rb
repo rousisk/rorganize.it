@@ -70,14 +70,6 @@ class Person < ActiveRecord::Base
     !!memberships.find_by(group_id: group.id)
   end
 
-  def has_notifications?
-    notifications.present?
-  end
-
-  def list_notifications
-    notifications
-  end
-
   def <=>(other)
     name <=> other.name
   end
