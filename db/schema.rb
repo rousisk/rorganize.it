@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150609182348) do
+ActiveRecord::Schema.define(version: 20150804182925) do
 
   create_table "friendly_id_slugs", force: true do |t|
     t.string   "slug",                      null: false
@@ -65,7 +65,6 @@ ActiveRecord::Schema.define(version: 20150609182348) do
 
   create_table "notifications", force: true do |t|
     t.integer  "person_id"
-    t.integer  "group_id"
     t.datetime "viewed_at"
     t.string   "content"
     t.datetime "created_at"

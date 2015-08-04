@@ -5,6 +5,4 @@
       %ul.list-group
         - @notifications.each do |note|
           %li
-            = note.person.name
-            = note.group.name
             = note.content

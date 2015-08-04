@@ -11,15 +11,26 @@ class NotificationsController < ApplicationController
   end
 
   def create
-    @notification = Notification.new(notification_params)
 
-    @notification.person = Person.find(params[:notification][:person_id].to_i)
-    @notification.group = Group.find(params[:notification][:group_id].to_i)
+    group_id = params[:notification][:group].to_i
+    group = Group.find(group_id) unless group_id == 0
+    success = true
+    unless group
+      @notification = Notification.new(notification_params)
+      @notification.person = Person.find(params[:notification][:person_id].to_i)
+      success = @notification.save
+    else
+      group.memberships.map do |m|
+        @notification = Notification.new(notification_params)
+        @notification.person = m.person
+        success = @notification.save
+      end
+    end
 
-    if @notification.save
+    if success
       redirect_to notifications_path, notice: 'A new notification was created. This calls for cake!'
     else
-      render action: 'new'
+      redirect_to notifications_path, warning: 'Not cake yet! Looks like not all notifications were successful.'
     end
   end
 
@@ -38,7 +49,7 @@ class NotificationsController < ApplicationController
     # notifications = Notification.where(notification_id: @notification.id)
   end
 
-  def destroy
+  def destroy 
     @notification.destroy
     redirect_to notifications_path, notice: 'Notification was successfully deleted.'
   end
@@ -46,6 +57,6 @@ class NotificationsController < ApplicationController
   private
 
   def notification_params
-    params.require(:notification).permit(:person, :group, :content)
+    params.require(:notification).permit(:person, :content)
   end
 end
