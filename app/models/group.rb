@@ -17,6 +17,12 @@
 #  email      :string(255)
 #  level      :string(255)
 #  founded_on :string(255)
+#  full       :boolean          default(FALSE)
+#  city       :string(255)
+#  country    :string(255)
+#  slug       :string(255)
+#  zip        :string(255)
+#  street     :string(255)
 #
 
 class Group < ActiveRecord::Base
@@ -35,6 +41,8 @@ class Group < ActiveRecord::Base
   validates :name, presence: true
   validates :email, format: { with: FORMAT }, presence: true
   validates :contact, presence: true
+  validates :city, presence: true
+  validates :country, presence: true
 
   mount_uploader :picture, PictureUploader
   geocoded_by :location
@@ -53,7 +61,7 @@ class Group < ActiveRecord::Base
   end
 
   def deletable_by?(person)
-    person && person.has_role?(:admin)
+    person && person.admin?
   end
 
   def not_full?

@@ -21,6 +21,8 @@
 #  picture                :string(255)
 #  twitter                :string(255)
 #  working_on             :text
+#  willing_to_coach       :boolean
+#  workshop_coach         :boolean
 #
 
 FactoryGirl.define do
@@ -47,8 +49,6 @@ FactoryGirl.define do
     last_name 'Cake'
     email
     password 'tarntest'
-    after(:build) do |user|
-      user.add_role(:admin)
-    end
+    admin true
   end
 end

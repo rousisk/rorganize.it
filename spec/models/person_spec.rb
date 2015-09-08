@@ -21,6 +21,7 @@
 #  picture                :string(255)
 #  twitter                :string(255)
 #  working_on             :text
+#  workshop_coach         :boolean
 #
 
 require 'spec_helper'
@@ -100,14 +101,22 @@ describe Person do
     end
   end
 
+  describe 'willing to coach workshop checkbox' do
+    it 'indicates the Person wants to coach workshops' do
+      person.workshop_coach = true
+      expect(person.workshop_coach).to be_truthy
+    end
+
+    it 'indicates the Person does not want to coach workshops' do
+      expect(person.workshop_coach).to be_falsey
+    end
+  end
 
   describe '.admin' do
-
     subject { described_class.admin }
 
-    let!(:admin) { create(:person) }
+    let!(:admin) { create(:admin) }
     let!(:user) { create(:person) }
-    before { admin.add_role :admin }
 
     it 'lists all the admins' do
       expect(subject).to contain_exactly(admin)

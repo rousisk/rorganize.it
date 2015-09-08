@@ -17,6 +17,12 @@
 #  email      :string(255)
 #  level      :string(255)
 #  founded_on :string(255)
+#  full       :boolean          default(FALSE)
+#  city       :string(255)
+#  country    :string(255)
+#  slug       :string(255)
+#  zip        :string(255)
+#  street     :string(255)
 #
 
 FactoryGirl.define do
@@ -24,6 +30,8 @@ FactoryGirl.define do
     name 'Test Group'
     email 'testgroup@email.com'
     contact 'some googlegroup'
+    city 'Berlin'
+    country 'DE'
     slug 'test-group'
   end
 
@@ -31,6 +39,8 @@ FactoryGirl.define do
     name 'Second Group'
     email 'secondgroup@email.com'
     contact 'some other googlegroup'
+    city 'Hamburg'
+    country 'DE'
     slug 'second-group'
   end
 end

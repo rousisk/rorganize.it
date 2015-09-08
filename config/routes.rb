@@ -7,12 +7,16 @@ RailsGirlsApp::Application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'pages#index'
 
-  get 'about' => 'pages#about', as: :about
+  get 'about' => 'pages#about'
+  get 'welcome' => 'pages#welcome'
+  get 'conduct' => 'pages#conduct'
+
   #resources routing declare all of the common routes for the certain controller (index, new, edit etc...)
   resources :groups do
     resources :topics, only: [:create, :edit, :update, :destroy]
   end
   resources :people
+  resources :coaches
   resources :memberships, only: [:create, :destroy]
   resources :posts
   resource :dashboard, only: [:show] do

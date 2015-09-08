@@ -5,30 +5,39 @@
         %h1.pull-left= @person.full_name
         .btn-group.pull-right
           - if logged_in?(@person)
-            = link_to edit_person_registration_path, html_options = {class: 'btn btn-default'} do
+            = link_to edit_person_path(@person), class: 'btn btn-default' do
               = fa_icon "pencil", text: "edit"
-          = link_to people_path, html_options = {class: 'btn btn-default'} do
+          = link_to people_path, class: 'btn btn-default' do
             = fa_icon "arrow-left", text: "back"
 
   .row
     .col-md-3
       #person-show-pic.profile-picture
-        = image_tag(@person.picture_url(:person_profile)) if @person.picture?
+        = render partial: "shared/person_picture", locals: { person: @person }
       - if @person.twitter?
         %p
           Twitter:
           = render partial: "shared/twitter", locals: { object: @person }
+      - if @person.workshop_coach?
+        %p
+          I am willing to coach at Rails Girls workshops
+      - if @person.willing_to_travel?
+        %p
+          I am willing to travel to a Rails Girls Workshop
+      - if coach_location?(@person)
+        %p
+          %strong Based in:
+          #{@person.city} #{@person.country}
     .col-md-4
       %h4 Project Groups:
       - if @person.has_group?
         %ul.list
           - @person.groups.each do |group|
             %li
-              - if group.picture?
-                = image_tag(group.picture_url(:thumb))
-              - else
-                = image_tag('/group-avatar.png', size: "40x40")
+              = render partial: 'shared/group_picture', locals: { group: group}
+
               = link_to group.name, group_path(group.id)
+
               - if admin?
                 = render partial: 'groups/remove_from_group', locals: { object: @person, group: group }
       - else
@@ -51,4 +60,3 @@
         .btn-group.pull-right
           = link_to person_registration_path(@person), method: :delete, data: { confirm: "Are you sure you want to delete your account?" } do
             = fa_icon 'trash-o', text: 'delete'
-

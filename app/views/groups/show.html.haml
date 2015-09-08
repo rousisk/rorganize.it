@@ -5,17 +5,17 @@
         %h1.pull-left= @group.name
         .pull-right
           .btn-group
-            = link_to groups_path, html_options = {:class => 'btn btn-default'} do
+            = link_to groups_path, html_options = { class: 'btn btn-default'} do
               %i.glyphicon.glyphicon-arrow-left
               overview
 
             - if show_member_buttons?(current_person, @group)
 
               .btn-group
-                %button.btn.btn-default.dropdown-toggle{:type => "button", "data-toggle" => "dropdown"}
+                %button.btn.btn-default.dropdown-toggle{ type: "button", "data-toggle" => "dropdown"}
                   %span.glyphicon.glyphicon-cog
                   %span.caret
-                %ul.dropdown-menu.pull-right{:role => "menu", "aria-labelledby" => "dropdownMenu1"}
+                %ul.dropdown-menu.pull-right{ role: "menu", "aria-labelledby" => "dropdownMenu1"}
                   %li
                     = link_to edit_group_path(@group.id) do
                       %i.glyphicon.glyphicon-edit
@@ -27,8 +27,12 @@
             - if even_a_button?(@group) && show_join_group_button?(current_person, @group)
               = render 'join'
 
-            - if @group.full?
-              = link_to groups_path, html_options = {:class => 'btn btn-error'} do
+            - if @group.inactive?
+              = link_to groups_path, html_options = { class: 'btn btn-error'} do
+                %i.glyphicon.glyphicon-remove-sign
+                GROUP CURRENTLY INACTIVE
+            - elsif @group.full?
+              = link_to groups_path, html_options = { class: 'btn btn-error'} do
                 %i.glyphicon.glyphicon-remove-sign
                 GROUP CURRENTLY FULL
 
@@ -87,12 +91,21 @@
             = link_to coach.first_name, person_path(coach)
             - if admin?
               = render partial: 'remove_from_group', locals: { object: coach, group: @group }
-    #group-map.col-md-4
-      - if @group.address?
-        .map
-          = groups_map @group
-      - else
-        = image_tag('follow_your_dreams.gif')
+
+    .col-md-4
+      #group-map
+        - if @group.address?
+          .map
+            = groups_map @group
+        - else
+          = image_tag('follow_your_dreams.gif')
+
+      - if @group.learning_resources?
+        %br
+        %p
+          %strong Suggested learning resources:
+          = markdown(@group.learning_resources)
+
 
   .row.topics
     = render template: "topics/index"

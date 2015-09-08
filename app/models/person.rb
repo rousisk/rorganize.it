@@ -21,10 +21,10 @@
 #  picture                :string(255)
 #  twitter                :string(255)
 #  working_on             :text
+#  workshop_coach         :boolean
 #
 
 class Person < ActiveRecord::Base
-  rolify
   include TwitterHandle
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -41,9 +41,7 @@ class Person < ActiveRecord::Base
 
   validates :first_name, presence: true
 
-  def self.admin
-    joins(:roles).where('roles.name = \'admin\'')
-  end
+  scope :admin, -> { where(admin: true) }
 
   def has_group?
     groups.empty? == false

@@ -6,7 +6,7 @@ describe GroupsController do
     let(:person) { create(:person) }
 
     context 'with correct params' do
-      let(:params) {{ group: { name: 'rubycorns', email: 'test@tehest.com', contact: 'fruitcakes' } }}
+      let(:params) {{ group: { name: 'rubycorns', email: 'test@tehest.com', contact: 'fruitcakes', city: 'Berlin', country: 'DE' } }}
 
       before do
         allow(controller).to receive :authenticate_person!
@@ -121,7 +121,7 @@ describe GroupsController do
     context 'as an admin' do
 
       before do
-        person.add_role :admin
+        person.admin = true
       end
 
       it 'redirects to the groups path after successful deletion' do

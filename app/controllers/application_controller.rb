@@ -8,7 +8,10 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    editable_fields = [:first_name, :last_name, :group_id, :twitter, :picture, :working_on]
+    editable_fields = [
+      :first_name,
+      :last_name,
+    ]
 
     devise_parameter_sanitizer.for(:sign_up) do |person|
       person.permit(editable_fields + [:email, :password, :password_confirmation, :type])
@@ -20,7 +23,7 @@ class ApplicationController < ActionController::Base
   end
 
   def ensure_admin_powers
-    render_403 unless current_person.has_role?(:admin)
+    render_403 unless current_person.admin?
   end
 
   def ensure_member_powers

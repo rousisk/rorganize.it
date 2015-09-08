@@ -17,6 +17,12 @@
 #  email      :string(255)
 #  level      :string(255)
 #  founded_on :string(255)
+#  full       :boolean          default(FALSE)
+#  city       :string(255)
+#  country    :string(255)
+#  slug       :string(255)
+#  zip        :string(255)
+#  street     :string(255)
 #
 
 require 'spec_helper'
@@ -51,7 +57,7 @@ describe Group do
     end
 
     it 'is deletable by an admin' do
-      person.add_role :admin
+      person.update_attribute(:admin, true)
       expect(group).to be_deletable_by person
     end
 
