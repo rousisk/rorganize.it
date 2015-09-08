@@ -1,13 +1,21 @@
 %ul.dropdown-menu
   - current_person.notifications.reverse.each do |notification|
-    %li
+    %li{:class => ("unread" unless notification.viewed_at.present?)}
       = notification.content
-      %a{:href => "#", title: "mark as viewed"}= fa_icon "eye"
+
+      = form_for(notification,
+          html: {:method => :put},
+          ) do |f|
+        - if notification.viewed_at.present?
+          = f.hidden_field :viewed_at, :value => nil
+        - else
+          = f.hidden_field :viewed_at, :value => Time.now
+        %button.link.no-btn
+          %span= fa_icon "eye"
 
       = form_for(notification,
           html: {:method => :delete},
           data: { confirm: "Sure?" },
           ) do |f|
-        / = f.hidden_field :id, value: notification.id
         %button.link.no-btn
           %span= fa_icon "trash-o"

@@ -28,6 +28,7 @@
               <button class="dropdown-toggle no-btn" type="button" id="dropdownMenu1" data-toggle="dropdown">
                 <%= fa_icon "bullhorn" %>
                 <%= fa_icon "caret-down" %>
+                <span class="badge"><%= current_person.unread_notifications.size %></span>
               </button>
               <%= render 'layouts/notifications' %>
             </div>

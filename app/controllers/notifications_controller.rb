@@ -38,10 +38,20 @@ class NotificationsController < ApplicationController
   end
 
   def update
-    if @notification.update_attributes notification_params
-      redirect_to notification_path(@notification), notice: 'Notification was updated. Let\'s have some cake.'
+
+    if @notification
+      if @notification.update_attributes notification_params
+        redirect_to notification_path(@notification), notice: 'Notification was updated. Let\'s have some cake.'
+      else
+        render action: 'edit'
+      end
     else
-      render action: 'edit'
+      @notification = Notification.find(params[:id])
+      if @notification.update_attributes notification_params
+        redirect_to root_path, notice: 'Notification was updated. Let\'s have some cake.'
+      else
+        redirect_to root_path, notice: 'Could not update notification. Womp womp.'
+      end
     end
   end
 
@@ -58,6 +68,6 @@ class NotificationsController < ApplicationController
   private
 
   def notification_params
-    params.require(:notification).permit(:person, :content)
+    params.require(:notification).permit(:person, :content, :viewed_at)
   end
 end

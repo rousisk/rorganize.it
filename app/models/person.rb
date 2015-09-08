@@ -68,6 +68,10 @@ class Person < ActiveRecord::Base
     !!memberships.find_by(group_id: group.id)
   end
 
+  def unread_notifications
+    notifications.select { |notification| notification.viewed_at == nil }
+  end
+
   def <=>(other)
     name <=> other.name
   end
