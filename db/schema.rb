@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150825181332) do
+ActiveRecord::Schema.define(version: 20151006193254) do
 
   create_table "friendly_id_slugs", force: true do |t|
     t.string   "slug",                      null: false
@@ -86,11 +86,12 @@ ActiveRecord::Schema.define(version: 20150825181332) do
     t.text     "working_on"
     t.boolean  "workshop_coach"
     t.boolean  "admin",                  default: false, null: false
+    t.string   "provider"
+    t.string   "uid"
     t.boolean  "willing_to_travel",      default: false
     t.string   "city"
     t.string   "country"
-    t.string   "provider"
-    t.string   "uid"
+    t.string   "website"
   end
 
   add_index "people", ["email"], name: "index_people_on_email", unique: true

@@ -63,6 +63,9 @@ Run the server
 
 et voilá
 
+Run the test 
+
+    bundle exec rspec
 
 
 ### Git: branches 
