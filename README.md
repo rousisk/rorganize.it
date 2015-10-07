@@ -63,7 +63,7 @@ Run the server
 
 et voilá
 
-Run the test 
+Run all the tests 
 
     bundle exec rspec
 
