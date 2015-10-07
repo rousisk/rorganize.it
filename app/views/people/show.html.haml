@@ -30,7 +30,7 @@
       - if @person.website?
         %p
           Website:
-          #{@person.website}
+          = render partial: "shared/website", locals: { object: @person }
       - if @person.workshop_coach?
         %p
           I am willing to coach at Rails Girls workshops
