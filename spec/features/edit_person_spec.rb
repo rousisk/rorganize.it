@@ -36,12 +36,18 @@ feature 'edit a person' do
 
   end
 
-  describe 'adding a personal website' do
+  describe 'adding a valid personal website' do
 
-    scenario 'links to personal website' do
+    scenario 'with complete link' do
       fill_in "Website", with: 'http://pragtob.info'
       click_button 'Save'
       expect(page).to have_content 'http://pragtob.info'
+    end
+
+    scenario 'with incomplete link' do
+      fill_in "Website", with: 'malweene.com'
+      click_button 'Save'
+      expect(page).to have_content 'http://malweene.com'
     end
   end
 end
