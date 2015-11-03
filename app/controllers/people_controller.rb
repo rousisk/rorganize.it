@@ -5,6 +5,11 @@ class PeopleController < ApplicationController
 
   def index
     @people = Person.order(:first_name).order(:last_name)
+    @people = @people.by_country(params[:country]) if params[:country].present?
+    @people = @people.by_city(params[:city]) if params[:city].present?
+
+    @cities = @people.cities
+    @countries = @people.countries
   end
 
   def show
